@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal del alumno - Inicia sesión o registra tu cuenta en CEINFUA">
+  <title>Portal del alumno - CEINFUA</title>
+
+  <!-- Fuente moderna -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- HEADER MODERNO -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="brand">
+        <h1 class="brand-title">CEINFUA</h1>
+        <p class="brand-subtitle">Portal del alumno</p>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="admin-login.html">Admin</a>
+      </nav>
+
+      <!-- Botón de tema (mismo sistema que en admin) -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" type="button">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="auth-main">
+    <div class="container auth-wrapper">
+      <section class="auth-card">
+        <h2 class="auth-title">Portal del alumno</h2>
+        <p class="auth-subtitle">
+          Iniciá sesión si ya tenés cuenta aprobada o enviá tu solicitud de registro.
+        </p>
+
+        <div class="auth-grid">
+          <!-- Login -->
+          <article class="auth-column">
+            <h3 class="auth-column-title">Iniciar sesión</h3>
+            <form id="loginForm" class="form-card no-shadow" novalidate>
+              <div>
+                <label for="loginCorreo">Email</label>
+                <input 
+                  type="email" 
+                  id="loginCorreo" 
+                  name="email"
+                  placeholder="Email" 
+                  autocomplete="email"
+                  required 
+                  aria-required="true">
+              </div>
+
+              <div>
+                <label for="loginContraseña">Contraseña</label>
+                <input 
+                  type="password" 
+                  id="loginContraseña" 
+                  name="password"
+                  placeholder="Contraseña" 
+                  autocomplete="current-password"
+                  required 
+                  aria-required="true">
+              </div>
+
+              <button type="submit">Entrar</button>
+            </form>
+          </article>
+
+          <!-- Registro -->
+          <article class="auth-column">
+            <h3 class="auth-column-title">Registrarme</h3>
+            <form id="registroForm" class="form-card no-shadow" novalidate>
+              <div>
+                <label for="nombre">Nombre</label>
+                <input 
+                  type="text" 
+                  id="nombre" 
+                  name="nombre"
+                  placeholder="Nombre" 
+                  autocomplete="given-name"
+                  required 
+                  aria-required="true">
+              </div>
+
+              <div>
+                <label for="apellido">Apellido</label>
+                <input 
+                  type="text" 
+                  id="apellido" 
+                  name="apellido"
+                  placeholder="Apellido" 
+                  autocomplete="family-name"
+                  required 
+                  aria-required="true">
+              </div>
+
+              <div>
+                <label for="correo">Correo</label>
+                <input 
+                  type="email" 
+                  id="correo" 
+                  name="correo"
+                  placeholder="Correo" 
+                  autocomplete="email"
+                  required 
+                  aria-required="true">
+              </div>
+
+              <div>
+                <label for="semestre">Semestre / Curso</label>
+                <input 
+                  type="text" 
+                  id="semestre" 
+                  name="semestre"
+                  placeholder="Semestre" 
+                  required 
+                  aria-required="true">
+              </div>
+
+              <div>
+                <label for="contraseña">Contraseña</label>
+                <input 
+                  type="password" 
+                  id="contraseña" 
+                  name="contraseña"
+                  placeholder="Contraseña" 
+                  autocomplete="new-password"
+                  required 
+                  aria-required="true">
+              </div>
+
+              <button type="submit">Enviar solicitud</button>
+            </form>
+          </article>
+        </div>
+
+        <section class="auth-info">
+          <h3>Próximamente</h3>
+          <p>
+            ¡Estamos construyendo algo grandioso para vos! ✨<br>
+            Una vez que tu cuenta sea aprobada por el administrador, vas a poder
+            acceder a más funciones, talleres, novedades y material exclusivo del centro de estudiantes.
+          </p>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>CEINFUA</h3>
+        <p>Centro de Estudiantes de Informática - Universidad Americana</p>
+      </div>
+      <div>
+        <p class="muted">© CEINFUA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/alumno.js"></script>
+
+  <!-- Mismo script de tema claro/oscuro que en admin -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("ceinfua-theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      if (themeToggle) themeToggle.textContent = "☀️";
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark-theme");
+        localStorage.setItem("ceinfua-theme", isDark ? "dark" : "light");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+      });
+    }
+  </script>
+</body>
+</html>

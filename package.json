@@ -1,0 +1,12 @@
+{
+  "name": "ceinfua",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo \"build estatico\""
+  },
+  "dependencies": {
+    "@netlify/neon": "^0.1.0",
+    "pusher": "^5.2.0"
+  }
+}

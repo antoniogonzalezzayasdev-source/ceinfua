@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel de administración del Centro de Estudiantes de Informática - Universidad Americana">
+  <title>Login Administrador - CEINFUA</title>
+
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- HEADER MODERNO -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="brand">
+        <h1 class="brand-title">CEINFUA</h1>
+        <p class="brand-subtitle">Panel de Administración</p>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="alumno-login.html">Portal alumno</a>
+      </nav>
+
+      <!-- Botón de tema -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" type="button">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="auth-main">
+    <div class="auth-wrapper">
+      <section class="auth-card" style="max-width: 480px; margin: 0 auto;">
+        <h2 class="auth-title">🔐 Ingreso administrador</h2>
+        <p class="auth-subtitle">
+          Acceso al panel para gestión de alumnos, noticias y contenido del centro de estudiantes.
+        </p>
+
+        <form id="form-admin-login" class="form-card" novalidate>
+          <div>
+            <label for="admin-usuario">Usuario</label>
+            <input 
+              type="text" 
+              id="admin-usuario" 
+              name="usuario"
+              placeholder="Ingresá tu usuario" 
+              autocomplete="username"
+              required 
+              aria-required="true">
+          </div>
+
+          <div>
+            <label for="admin-password">Contraseña</label>
+            <input 
+              type="password" 
+              id="admin-password" 
+              name="password"
+              placeholder="Ingresá tu contraseña" 
+              autocomplete="current-password"
+              required 
+              aria-required="true">
+          </div>
+
+          <button type="submit">Entrar al panel →</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>CEINFUA</h3>
+        <p>Centro de Estudiantes de Informática - Universidad Americana</p>
+      </div>
+      <div>
+        <p class="muted">© CEINFUA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/admin.js"></script>
+
+  <!-- Script para cambiar de tema -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("ceinfua-theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      if (themeToggle) themeToggle.textContent = "☀️";
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark-theme");
+        localStorage.setItem("ceinfua-theme", isDark ? "dark" : "light");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+      });
+    }
+  </script>
+</body>
+</html>

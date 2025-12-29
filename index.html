@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Centro de Estudiantes de Informática de la Universidad Americana. Representamos a los estudiantes, organizamos talleres y creamos comunidad.">
+  <title>CEINFUA - Centro de Estudiantes de Informática</title>
+
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- NOTIFICACIÓN DE MANTENIMIENTO -->
+  <div id="maintenance-overlay" class="maintenance-overlay" role="dialog" aria-modal="true" aria-labelledby="maintenance-title" aria-hidden="true">
+    <div class="maintenance-panel" role="document">
+      <button class="maintenance-close" id="maintenanceClose" aria-label="Cerrar notificación" type="button">✕</button>
+      <h2 id="maintenance-title">⚡ Mantenimiento Programado</h2>
+      <p id="maintenance-message">Mantenimiento programado para el <strong>27</strong> a <strong>28 de noviembre del 2025</strong>. Durante este periodo algunos servicios podrían no estar disponibles.</p>
+      <div class="maintenance-actions">
+        <button id="maintenanceDismiss" class="btn primary" type="button">Entendido</button>
+        <button id="maintenanceRemind" class="btn secondary" type="button">Recordarme más tarde</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER MODERNO -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="brand">
+        <h1 class="brand-title">CEINFUA</h1>
+        <p class="brand-subtitle">Centro de Estudiantes de Informática</p>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="#sobre-nosotros">Sobre nosotros</a>
+        <a href="#publicaciones">Publicaciones</a>
+        <a href="#talleres">Talleres</a>
+        <a href="alumno-login.html">Portal</a>
+        <a href="admin-login.html">Admin</a>
+        <a href="calculadora.html">Notas</a>
+      </nav>
+
+      <!-- Botón tema -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" type="button">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO PRINCIPAL -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h2>
+          Centro de Estudiantes<br>
+          de <span>Informática</span>
+        </h2>
+        <p>
+          Acompañamos a los alumnos de la Universidad Americana, impulsando proyectos,
+          talleres, apoyo académico y representación estudiantil desde CEINFUA.
+        </p>
+        <div class="hero-actions">
+          <a href="#sobre-nosotros" class="btn primary">Conocer CEINFUA</a>
+          <a href="alumno-login.html" class="btn ghost">Ir al portal →</a>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <h3>¿Qué hacemos?</h3>
+        <ul>
+          <li>Representamos a los estudiantes de informática ante la universidad.</li>
+          <li>Organizamos talleres, charlas técnicas y actividades.</li>
+          <li>Creamos comunidad y apoyo entre compañeros.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <main>
+    <!-- SOBRE NOSOTROS -->
+    <section id="sobre-nosotros" class="section">
+      <div class="container">
+        <h2 class="section-title">Sobre nosotros</h2>
+        <p class="section-subtitle">
+          Toda la información institucional en un solo lugar: quiénes somos, hacia dónde vamos y por qué existimos.
+        </p>
+
+        <div class="card-grid">
+          <article class="card" id="quienes-somos">
+            <h3>👥 Quiénes somos</h3>
+            <p>
+              Somos el Centro de Estudiantes de Informática de la Universidad Americana (CEINFUA),
+              un grupo de estudiantes comprometidos con mejorar la experiencia académica y la vida universitaria.
+            </p>
+          </article>
+
+          <article class="card" id="futuro">
+            <h3>🚀 Nuestro futuro</h3>
+            <p>
+              Trabajamos para construir una comunidad fuerte, conectada con la industria,
+              con actividades, proyectos y espacios que preparen a los estudiantes
+              para los desafíos profesionales que vienen.
+            </p>
+          </article>
+
+          <article class="card" id="para-que">
+            <h3>🎯 Para qué estamos</h3>
+            <p>
+              Representamos a los estudiantes, impulsamos oportunidades de aprendizaje,
+              facilitamos la comunicación con la facultad y apoyamos iniciativas que
+              aporten al crecimiento de todos.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLICACIONES -->
+    <section id="publicaciones" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Publicaciones</h2>
+        <p class="section-subtitle">
+          Noticias y comunicados oficiales del centro de estudiantes.
+        </p>
+
+        <div>
+          <h3>📰 Noticias</h3>
+          <p class="muted">
+            Últimas novedades, anuncios importantes y eventos destacados relacionados con CEINFUA.
+          </p>
+
+          <!-- Grilla de noticias -->
+          <div id="lista-noticias" class="news-grid" role="region" aria-live="polite">
+            <p>No hay noticias publicadas aún.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TALLERES -->
+    <section id="talleres" class="section">
+      <div class="container">
+        <h2 class="section-title">Talleres y actividades</h2>
+        <p class="section-subtitle">
+          Próximamente vas a poder ver aquí la agenda de actividades organizadas por CEINFUA.
+        </p>
+
+        <article class="card single-card">
+          <h3>🛠️ Muy pronto...</h3>
+          <p>
+            Estamos preparando talleres de programación, charlas con profesionales,
+            grupos de estudio y más. Esta sección se conectará a la base de datos
+            para mostrar el calendario actualizado.
+          </p>
+
+          <div id="lista-talleres" style="margin-top: 1rem;" role="region" aria-live="polite">
+            <!-- Aquí tu JS podrá inyectar la lista de talleres en el futuro -->
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>CEINFUA</h3>
+        <p>Centro de Estudiantes de Informática - Universidad Americana</p>
+      </div>
+      <div>
+        <p class="muted">© CEINFUA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL DE NOTICIA COMPLETA -->
+  <div id="news-modal" class="news-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="news-modal-title">
+    <div class="news-modal-backdrop"></div>
+
+    <div class="news-modal-dialog">
+      <button type="button" class="news-modal-close" aria-label="Cerrar modal">
+        &times;
+      </button>
+
+      <h2 id="news-modal-title"></h2>
+      <p id="news-modal-date" class="news-modal-date"></p>
+
+      <div id="news-modal-body" class="news-modal-body"></div>
+
+      <a id="news-modal-link"
+         class="btn-enlace news-modal-link"
+         href="#"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="display:none;">
+        Abrir enlace
+      </a>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+
+  <!-- Sistema de tema claro/oscuro -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("ceinfua-theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      if (themeToggle) themeToggle.textContent = "☀️";
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark-theme");
+        localStorage.setItem("ceinfua-theme", isDark ? "dark" : "light");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+      });
+    }
+  </script>
+  
+  <!-- 💬 TIDIO LIVE CHAT WIDGET -->
+  <script src="//code.tidio.co/cy1w9k2fqxspalktrzoloumqoceaw1bv.js" async></script>
+
+</body>
+</html>

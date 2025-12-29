@@ -1,0 +1,782 @@
+/* ===========================
+   PANEL-ALUMNO.CSS
+   Diseño moderno para el portal del estudiante
+   =========================== */
+
+/* ===========================
+   VARIABLES ESPECÍFICAS DEL PANEL
+   =========================== */
+:root {
+  /* Gradientes especiales */
+  --gradient-welcome: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-info: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  
+  /* Estados */
+  --success: #10b981;
+  --success-soft: rgba(16, 185, 129, 0.1);
+  --success-border: rgba(16, 185, 129, 0.3);
+  
+  --warning: #f59e0b;
+  --warning-soft: rgba(245, 158, 11, 0.1);
+  
+  --info: #06b6d4;
+  --info-soft: rgba(6, 182, 212, 0.1);
+}
+
+.dark-theme {
+  --success-soft: rgba(16, 185, 129, 0.15);
+  --success-border: rgba(16, 185, 129, 0.4);
+  --warning-soft: rgba(245, 158, 11, 0.15);
+  --info-soft: rgba(6, 182, 212, 0.15);
+}
+
+/* ===========================
+   LAYOUT PRINCIPAL
+   =========================== */
+.auth-main {
+  padding: 2.5rem 0 3rem;
+  min-height: calc(100vh - 160px);
+}
+
+.auth-card {
+  max-width: 100%;
+}
+
+/* ===========================
+   ENCABEZADO DE BIENVENIDA
+   =========================== */
+.auth-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#alumnoNombre {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-subtitle {
+  font-size: 1rem;
+  max-width: 600px;
+}
+
+#saludoDinamico {
+  margin-top: -0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent-primary);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ===========================
+   WIDGET DEL CLIMA
+   =========================== */
+.widget-clima {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.widget-clima::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-info);
+}
+
+.widget-clima:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.clima-icono {
+  font-size: 2.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.clima-textos {
+  flex: 1;
+}
+
+.clima-temp {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+.clima-msg {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ===========================
+   GRID DEL PORTAL
+   =========================== */
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.auth-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-column-title {
+  font-size: 1.25rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ===========================
+   PORTAL CARDS
+   =========================== */
+.portal-card,
+.form-card.portal-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  position: relative;
+  transition: all var(--transition-base);
+  max-width: 100%;
+}
+
+.portal-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Efecto de borde gradiente sutil */
+.portal-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.3),
+    rgba(139, 92, 246, 0.2),
+    rgba(6, 182, 212, 0.3)
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.portal-card:hover::before {
+  opacity: 1;
+}
+
+.portal-card h3 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ===========================
+   MIS DATOS PERSONALES
+   =========================== */
+.form-card.portal-card p {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.form-card.portal-card p:last-of-type {
+  margin-bottom: 1.25rem;
+}
+
+.form-card.portal-card strong {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 140px;
+}
+
+/* Badge de estado */
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--success-soft);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+.estado-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ===========================
+   PORTAL ROW - GRID DE 2 COLUMNAS
+   =========================== */
+.portal-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 0;
+}
+
+.portal-card-half {
+  padding: 1.25rem 1.5rem;
+}
+
+/* ===========================
+   CONSEJO DEL DÍA
+   =========================== */
+#textoConsejo {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent-amber);
+}
+
+/* ===========================
+   ESTADO DEL SEMESTRE
+   =========================== */
+.semestre-card {
+  position: relative;
+  overflow: visible;
+}
+
+/* Preview (botón que abre el detalle) */
+.semestre-preview {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: opacity var(--transition-fast);
+}
+
+.semestre-preview:hover {
+  opacity: 0.8;
+}
+
+.semestre-preview-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.semestre-preview-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.semestre-preview-pill {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--info-soft);
+  color: var(--info);
+  font-weight: 600;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  flex-shrink: 0;
+}
+
+.semestre-preview-text {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* ===========================
+   DETALLE DEL SEMESTRE (Dropdown)
+   =========================== */
+.semestre-detalle {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  width: 400px;
+  max-width: calc(100vw - 2rem);
+  background: var(--surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  display: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all var(--transition-base);
+  z-index: var(--z-dropdown);
+}
+
+.semestre-card.is-open .semestre-detalle {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Botón cerrar */
+.cerrar-modal {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 36px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.cerrar-modal:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cerrar-modal svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Texto informativo */
+.reloj-semestre {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ===========================
+   CAMPOS DE FECHA
+   =========================== */
+.semestre-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.semestre-field {
+  flex: 1;
+}
+
+.semestre-field label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.semestre-field input[type="date"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.semestre-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-glow);
+}
+
+/* ===========================
+   ACCIONES DEL SEMESTRE
+   =========================== */
+.semestre-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.small-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-weight: 500;
+}
+
+.small-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+#guardarSemestreBtn {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+#guardarSemestreBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Mensaje de confirmación */
+.semestre-hint {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+#mensajeSemestre {
+  color: var(--success);
+  font-weight: 500;
+}
+
+/* ===========================
+   BARRA DE PROGRESO
+   =========================== */
+.progreso-semestre {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.progreso-semestre-barra {
+  width: 100%;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+
+.progreso-semestre-barra::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(255,255,255,0.1) 10px,
+    rgba(255,255,255,0.1) 20px
+  );
+}
+
+.progreso-semestre-barra-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gradient-success);
+  border-radius: inherit;
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progreso-semestre-barra-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+}
+
+.progreso-semestre-texto {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* ===========================
+   BOTONES GENERALES
+   =========================== */
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border-default);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.secondary-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+#logoutBtn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* ===========================
+   RESPONSIVE - TABLET
+   =========================== */
+@media (max-width: 900px) {
+  .portal-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .semestre-detalle {
+    width: 100%;
+    max-width: none;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - MOBILE
+   =========================== */
+@media (max-width: 640px) {
+  .auth-main {
+    padding: 1.5rem 0 2rem;
+  }
+  
+  .auth-title {
+    font-size: 1.35rem;
+  }
+  
+  .widget-clima {
+    padding: 1rem 1.25rem;
+  }
+  
+  .clima-icono {
+    font-size: 2rem;
+  }
+  
+  .clima-temp {
+    font-size: 1rem;
+  }
+  
+  .portal-card,
+  .form-card.portal-card {
+    padding: 1.25rem;
+  }
+  
+  .portal-card-half {
+    padding: 1rem 1.25rem;
+  }
+  
+  .form-card.portal-card strong {
+    min-width: 100%;
+    margin-bottom: 0.25rem;
+  }
+  
+  .form-card.portal-card p {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  /* Modal fullscreen en móvil */
+  .semestre-detalle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    border-radius: 0;
+    padding: 4rem 1.5rem 2rem;
+    overflow: auto;
+    background: var(--bg-primary);
+    border: none;
+    box-shadow: none;
+  }
+  
+  .semestre-card.is-open .semestre-detalle {
+    z-index: var(--z-modal);
+  }
+  
+  .cerrar-modal {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .cerrar-modal:hover {
+    transform: translateX(-50%) scale(1.05);
+  }
+  
+  .cerrar-modal svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .semestre-row {
+    flex-direction: column;
+  }
+  
+  .semestre-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .semestre-actions button,
+  .semestre-actions .small-btn {
+    width: 100%;
+  }
+}
+
+/* ===========================
+   ANIMACIONES
+   =========================== */
+@media (prefers-reduced-motion: no-preference) {
+  .portal-card {
+    animation: fadeInUp 400ms ease-out backwards;
+  }
+  
+  .portal-row .portal-card:nth-child(1) { animation-delay: 100ms; }
+  .portal-row .portal-card:nth-child(2) { animation-delay: 200ms; }
+  
+  .widget-clima {
+    animation: fadeInUp 400ms ease-out backwards;
+  }
+  
+  .semestre-detalle {
+    animation: dropdownOpen 200ms ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes dropdownOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ===========================
+   ACCESIBILIDAD
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+.semestre-preview:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
+}

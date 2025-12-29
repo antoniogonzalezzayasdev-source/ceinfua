@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel de administración - Gestión de noticias, alumnos y talleres">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel administrador - CEINFUA</title>
+
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- HEADER MODERNO -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="brand">
+        <h1 class="brand-title">CEINFUA</h1>
+        <p class="brand-subtitle">Panel del administrador</p>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Ver sitio público</a>
+        <a href="alumno-login.html">Portal alumno</a>
+        <a href="#" id="btn-cerrar-sesion">Cerrar sesión</a>
+      </nav>
+
+      <!-- Botón de tema -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" type="button">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL DEL PANEL -->
+  <main class="admin-main">
+    <div class="container admin-grid">
+      <!-- Columna izquierda: resumen -->
+      <section class="admin-section">
+        <h2>📊 Resumen general</h2>
+        <p>
+          Desde este panel vas a poder gestionar noticias, talleres y
+          aprobar cuentas de alumnos. Próximamente se conectará todo
+          directamente con la base de datos.
+        </p>
+
+        <div class="admin-summary-cards">
+          <article class="admin-summary-card">
+            <h3>📰 Noticias</h3>
+            <p>Publicá comunicados y novedades para los estudiantes.</p>
+          </article>
+          <article class="admin-summary-card">
+            <h3>👥 Alumnos</h3>
+            <p>Revisá y aprobá cuentas de alumnos registrados.</p>
+          </article>
+          <article class="admin-summary-card">
+            <h3>🛠️ Talleres</h3>
+            <p>Próximamente podrás gestionar actividades y eventos.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Columna derecha: gestión -->
+      <section class="admin-section">
+        <h2>✍️ Publicar noticia</h2>
+        <p style="margin-bottom: 1rem; font-size: 0.9rem;">
+          Completá el título y el contenido. Más adelante este formulario se conectará
+          a la base de datos para guardar la noticia.
+        </p>
+
+        <form id="form-nueva-noticia" class="form-card no-shadow" novalidate style="max-width: 100%;">
+          <div>
+            <label for="titulo-noticia">Título</label>
+            <input 
+              type="text" 
+              id="titulo-noticia" 
+              name="titulo"
+              placeholder="Título de la noticia"
+              required 
+              aria-required="true">
+          </div>
+
+          <div>
+            <label for="contenido-noticia">Contenido</label>
+            <textarea 
+              id="contenido-noticia" 
+              name="contenido"
+              rows="4" 
+              placeholder="Escribí el contenido de la noticia..."
+              required 
+              aria-required="true"
+              style="width: 100%; resize: vertical;"></textarea>
+          </div>
+
+          <button type="submit">Publicar noticia →</button>
+        </form>
+      </section>
+    </div>
+
+    <!-- Bloques inferiores: noticias y alumnos -->
+    <div class="container admin-bottom">
+      <section class="admin-section">
+        <h2>📋 Noticias Existentes</h2>
+        <div id="tabla-noticias" role="region" aria-live="polite">
+          <p class="muted">Más adelante listaremos aquí las noticias desde la base de datos.</p>
+        </div>
+      </section>
+
+      <section class="admin-section">
+        <h2>⏳ Alumnos Pendientes de Aprobación</h2>
+        <div id="lista-alumnos-pendientes" role="region" aria-live="polite">
+          <p class="muted">Próximamente podrás ver aquí las solicitudes de alumnos y aprobarlas o rechazarlas.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>CEINFUA</h3>
+        <p>Centro de Estudiantes de Informática - Universidad Americana</p>
+      </div>
+      <div>
+        <p class="muted">© CEINFUA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/admin.js"></script>
+
+  <!-- Tema claro/oscuro -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("ceinfua-theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      if (themeToggle) themeToggle.textContent = "☀️";
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark-theme");
+        localStorage.setItem("ceinfua-theme", isDark ? "dark" : "light");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+      });
+    }
+  </script>
+</body>
+</html>

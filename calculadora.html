@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora de notas para estudiantes de la Universidad Americana - CEINFUA">
+  <title>Calculadora de Notas - CEINFUA</title>
+
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+    /* Estilos específicos de la calculadora */
+    .calc-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .calc-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+    
+    .calc-title {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .calc-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    
+    .calc-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    
+    .calc-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .calc-input-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .calc-input-group input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-default);
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
+    }
+    
+    .calc-input-group input:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-primary-glow);
+    }
+    
+    .calc-input-group input::placeholder {
+      color: var(--text-muted);
+    }
+    
+    .calc-input-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    
+    .calc-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: var(--gradient-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .calc-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md), 0 0 20px var(--accent-primary-glow);
+    }
+    
+    .calc-btn:active {
+      transform: translateY(0);
+    }
+    
+    .calc-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* Resultados */
+    .calc-results {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      display: none;
+    }
+    
+    .calc-results.show {
+      display: block;
+      animation: fadeInUp 400ms ease-out;
+    }
+    
+    .calc-results-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Mensaje de exoneración */
+    .calc-exonerated {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .calc-exonerated-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .calc-exonerated-title {
+      font-size: 1.5rem;
+      color: var(--accent-emerald);
+      margin-bottom: 0.5rem;
+    }
+    
+    .calc-exonerated-text {
+      color: var(--text-secondary);
+    }
+    
+    /* Tabla de notas necesarias */
+    .calc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    
+    .calc-table th,
+    .calc-table td {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    
+    .calc-table th {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .calc-table td {
+      font-size: 0.95rem;
+    }
+    
+    .calc-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .calc-table .nota-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    
+    .nota-1 { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .nota-2 { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .nota-3 { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+    .nota-4 { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .nota-5 { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    
+    .calc-table .necesita {
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .necesita-imposible {
+      color: var(--text-muted);
+      font-style: italic;
+      font-weight: 400;
+    }
+    
+    .necesita-posible {
+      color: var(--accent-primary);
+    }
+    
+    .necesita-facil {
+      color: var(--accent-emerald);
+    }
+    
+    .necesita-ya {
+      color: var(--accent-emerald);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    /* Info de parciales */
+    .calc-parciales-info {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .calc-parciales-info p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+    
+    .calc-parciales-info strong {
+      color: var(--text-primary);
+    }
+    
+    /* Escala de notas */
+    .calc-escala {
+      margin-top: 2rem;
+    }
+    
+    .calc-escala-title {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+    }
+    
+    .calc-escala-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+    
+    .calc-escala-item {
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      border-radius: var(--radius-md);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+    }
+    
+    .calc-escala-item .nota {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .calc-escala-item .rango {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    
+    .calc-escala-item .nombre {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 640px) {
+      .calc-input-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .calc-card {
+        padding: 1.5rem;
+      }
+      
+      .calc-escala-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .calc-table th,
+      .calc-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+      }
+    }
+    
+    /* Animación */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="brand">
+        <h1 class="brand-title">CEINFUA</h1>
+        <p class="brand-subtitle">Centro de Estudiantes de Informática</p>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#publicaciones">Publicaciones</a>
+        <a href="index.html#talleres">Talleres</a>
+        <a href="calculadora.html" class="active">Calc. Notas</a>
+        <a href="alumno-login.html">Portal</a>
+      </nav>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" type="button">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="auth-main">
+    <div class="container calc-container">
+      
+      <section class="calc-card">
+        <h1 class="calc-title">🧮 Calculadora de Notas</h1>
+        <p class="calc-subtitle">
+          Ingresá tus notas de los 3 parciales y calculamos cuánto necesitás en el examen final para alcanzar cada calificación.
+        </p>
+
+        <form class="calc-form" id="calcForm">
+          <div class="calc-input-row">
+            <div class="calc-input-group">
+              <label for="parcial1">📝 Parcial 1</label>
+              <input 
+                type="number" 
+                id="parcial1" 
+                name="parcial1"
+                placeholder="0-100"
+                min="0"
+                max="100"
+                required>
+            </div>
+            
+            <div class="calc-input-group">
+              <label for="parcial2">📝 Parcial 2</label>
+              <input 
+                type="number" 
+                id="parcial2" 
+                name="parcial2"
+                placeholder="0-100"
+                min="0"
+                max="100"
+                required>
+            </div>
+            
+            <div class="calc-input-group">
+              <label for="parcial3">📝 Parcial 3</label>
+              <input 
+                type="number" 
+                id="parcial3" 
+                name="parcial3"
+                placeholder="0-100"
+                min="0"
+                max="100"
+                required>
+            </div>
+          </div>
+
+          <button type="submit" class="calc-btn">
+            Calcular nota necesaria →
+          </button>
+        </form>
+
+        <!-- Resultados -->
+        <div class="calc-results" id="calcResults">
+          <!-- Se llena dinámicamente -->
+        </div>
+
+        <!-- Escala de notas -->
+        <div class="calc-escala">
+          <h3 class="calc-escala-title">📊 Escala de calificaciones</h3>
+          <div class="calc-escala-grid">
+            <div class="calc-escala-item">
+              <div class="nota nota-1">1</div>
+              <div class="rango">1-59</div>
+              <div class="nombre">Aplazado</div>
+            </div>
+            <div class="calc-escala-item">
+              <div class="nota nota-2">2</div>
+              <div class="rango">60-69</div>
+              <div class="nombre">Aceptable</div>
+            </div>
+            <div class="calc-escala-item">
+              <div class="nota nota-3">3</div>
+              <div class="rango">70-79</div>
+              <div class="nombre">Bueno</div>
+            </div>
+            <div class="calc-escala-item">
+              <div class="nota nota-4">4</div>
+              <div class="rango">80-90</div>
+              <div class="nombre">Muy Bueno</div>
+            </div>
+            <div class="calc-escala-item">
+              <div class="nota nota-5">5</div>
+              <div class="rango">91-100</div>
+              <div class="nombre">Excelente</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>CEINFUA</h3>
+        <p>Centro de Estudiantes de Informática - Universidad Americana</p>
+      </div>
+      <div>
+        <p class="muted">© CEINFUA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script de la calculadora -->
+  <script>
+    // Escala de notas
+    const ESCALA = [
+      { nota: 1, nombre: 'Aplazado', min: 1, max: 59 },
+      { nota: 2, nombre: 'Aceptable', min: 60, max: 69 },
+      { nota: 3, nombre: 'Bueno', min: 70, max: 79 },
+      { nota: 4, nombre: 'Muy Bueno', min: 80, max: 90 },
+      { nota: 5, nombre: 'Excelente', min: 91, max: 100 }
+    ];
+
+    // Elementos del DOM
+    const form = document.getElementById('calcForm');
+    const resultsDiv = document.getElementById('calcResults');
+
+    // Manejar envío del formulario
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const p1 = parseFloat(document.getElementById('parcial1').value);
+      const p2 = parseFloat(document.getElementById('parcial2').value);
+      const p3 = parseFloat(document.getElementById('parcial3').value);
+      
+      // Validar
+      if (isNaN(p1) || isNaN(p2) || isNaN(p3)) {
+        alert('Por favor, ingresá las 3 notas de los parciales.');
+        return;
+      }
+      
+      if (p1 < 0 || p1 > 100 || p2 < 0 || p2 > 100 || p3 < 0 || p3 > 100) {
+        alert('Las notas deben estar entre 0 y 100.');
+        return;
+      }
+      
+      calcularNotas(p1, p2, p3);
+    });
+
+    function calcularNotas(p1, p2, p3) {
+      const parciales = [p1, p2, p3];
+      
+      // Verificar si exoneró (los 3 parciales >= 91)
+      const exonero = parciales.every(p => p >= 91);
+      
+      if (exonero) {
+        mostrarExoneracion(parciales);
+        return;
+      }
+      
+      // Tomar los 2 mejores parciales
+      const ordenados = [...parciales].sort((a, b) => b - a);
+      const mejores = [ordenados[0], ordenados[1]];
+      const peor = ordenados[2];
+      const promedioParciales = (mejores[0] + mejores[1]) / 2;
+      
+      // Calcular nota necesaria en final para cada calificación
+      // Fórmula: (mejores[0] + mejores[1] + final) / 3 = notaDeseada
+      // Despejando: final = (notaDeseada * 3) - mejores[0] - mejores[1]
+      
+      const resultados = [];
+      
+      for (const escala of ESCALA) {
+        // Calcular nota mínima necesaria para alcanzar esta calificación
+        const notaMinima = escala.min;
+        const finalNecesario = (notaMinima * 3) - mejores[0] - mejores[1];
+        
+        let estado = '';
+        let clase = '';
+        
+        if (finalNecesario <= 0) {
+          estado = '✓ Ya alcanzado';
+          clase = 'necesita-ya';
+        } else if (finalNecesario > 100) {
+          estado = 'No alcanzable';
+          clase = 'necesita-imposible';
+        } else if (finalNecesario <= 60) {
+          estado = Math.ceil(finalNecesario) + ' pts';
+          clase = 'necesita-facil';
+        } else {
+          estado = Math.ceil(finalNecesario) + ' pts';
+          clase = 'necesita-posible';
+        }
+        
+        resultados.push({
+          nota: escala.nota,
+          nombre: escala.nombre,
+          rango: `${escala.min}-${escala.max}`,
+          necesita: estado,
+          clase: clase,
+          finalNum: finalNecesario
+        });
+      }
+      
+      mostrarResultados(parciales, mejores, peor, promedioParciales, resultados);
+    }
+
+    function mostrarExoneracion(parciales) {
+      const promedio = (parciales[0] + parciales[1] + parciales[2]) / 3;
+      
+      resultsDiv.innerHTML = `
+        <div class="calc-exonerated">
+          <div class="calc-exonerated-icon">🎉</div>
+          <h3 class="calc-exonerated-title">¡Felicitaciones! Exoneraste el final</h3>
+          <p class="calc-exonerated-text">
+            Tus 3 parciales son mayores o iguales a 91 puntos.<br>
+            <strong>Pasás con 5 (Excelente)</strong> sin necesidad de rendir el examen final.
+          </p>
+          <div class="calc-parciales-info" style="margin-top: 1rem; text-align: left;">
+            <p><strong>Parcial 1:</strong> ${parciales[0]} pts</p>
+            <p><strong>Parcial 2:</strong> ${parciales[1]} pts</p>
+            <p><strong>Parcial 3:</strong> ${parciales[2]} pts</p>
+            <p style="margin-top: 0.5rem;"><strong>Promedio:</strong> ${promedio.toFixed(1)} pts</p>
+          </div>
+        </div>
+      `;
+      
+      resultsDiv.classList.add('show');
+    }
+
+    function mostrarResultados(parciales, mejores, peor, promedioParciales, resultados) {
+      let tablaHTML = '';
+      
+      for (const r of resultados) {
+        tablaHTML += `
+          <tr>
+            <td><span class="nota-badge nota-${r.nota}">${r.nota}</span></td>
+            <td>${r.nombre}</td>
+            <td>${r.rango}</td>
+            <td class="necesita ${r.clase}">${r.necesita}</td>
+          </tr>
+        `;
+      }
+      
+      resultsDiv.innerHTML = `
+        <h3 class="calc-results-title">📋 Resultados</h3>
+        
+        <div class="calc-parciales-info">
+          <p><strong>Tus parciales:</strong> ${parciales[0]}, ${parciales[1]}, ${parciales[2]} pts</p>
+          <p><strong>Mejores 2 parciales:</strong> ${mejores[0]} y ${mejores[1]} pts (promedio: ${promedioParciales.toFixed(1)})</p>
+          <p><strong>Parcial descartado:</strong> ${peor} pts</p>
+        </div>
+        
+        <table class="calc-table">
+          <thead>
+            <tr>
+              <th>Nota</th>
+              <th>Calificación</th>
+              <th>Rango</th>
+              <th>Necesitás en final</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tablaHTML}
+          </tbody>
+        </table>
+        
+        <p class="muted" style="margin-top: 1rem; font-size: 0.85rem;">
+          💡 <strong>Recordá:</strong> La nota final se calcula como el promedio de tus 2 mejores parciales + el examen final.
+        </p>
+      `;
+      
+      resultsDiv.classList.add('show');
+    }
+
+    // Sistema de tema claro/oscuro
+    const themeToggle = document.getElementById("themeToggle");
+    const savedTheme = localStorage.getItem("ceinfua-theme");
+    
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      if (themeToggle) themeToggle.textContent = "☀️";
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark-theme");
+        localStorage.setItem("ceinfua-theme", isDark ? "dark" : "light");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+      });
+    }
+  </script>
+
+</body>
+</html>
